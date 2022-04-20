@@ -7,7 +7,7 @@ const path = require('path')
 const { resolve } = path
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/react/theme',
+  base: '/theme-react',
   server: {
     port: 2022,
     host: '0.0.0.0',
@@ -18,7 +18,7 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/devServer/, ''),
       },
       '/devTheme': {
-        target: 'https://nutui.jd.com/theme/source',
+        target: 'https://nutui.jd.com/theme-react/source',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/devTheme/, ''),
       },

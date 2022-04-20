@@ -41,7 +41,7 @@
     "generate:themes": "node scripts/generate-themes.js",
     "generate:themes-dev": "node scripts/generate-themes-dev.js",
     "checked": "npm run generate:file && tsc",
-    "dev": "npm run checked && vite --open --force",
+    "dev": "npm run generate:themes-dev && npm run checked && vite --open --force",
     "replace:scss": "node scripts/replace-scss-alias.js",
     "replace:types": "node scripts/replace-types-alias.js",
     "build:types": "tsc && npm run replace:types",

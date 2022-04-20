@@ -40,6 +40,8 @@ class Store {
 
   get formItems() {
     const name = this.pathname
+    const res = toJS(this.variables).filter(({ lowerCaseName }) => lowerCaseName === name)
+    console.log(res)
     return toJS(this.variables).filter(({ lowerCaseName }) => lowerCaseName === name)
   }
 
@@ -61,7 +63,6 @@ class Store {
     this.variables.map((variable) => {
       const { lowerCaseName, key } = variable
       if (lowerCaseName == item.lowerCaseName && key == item.key) {
-        console.log('updateVariablesByItem', variable)
         variable.value = item.value
       }
     })
@@ -214,7 +215,6 @@ const parseSassVariables = (text: string, components: string[]) => {
         'g'
       )
       const matched = text.match(reg)
-      console.log(matched)
       if (matched) {
         return extractVariables(matched, name, lowerCaseName)
       }

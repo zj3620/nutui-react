@@ -67,8 +67,11 @@ export const ThemeSetting: React.FC<unknown> = observer((props) => {
         </div>
         <ul>
           {store.formItems.map((item) => (
-            <li key={item.key}>
-              <p>{item.key_zh}</p>
+            <li key={`${Math.random()}${item.name}${item.key}`}>
+              <p>
+                {item.key_zh}
+                {item.name}
+              </p>
               <p>
                 <b>{item.key}</b>:{item.value} (<del>{item.rawValue}</del>)
               </p>
@@ -92,9 +95,6 @@ export const ThemeSetting: React.FC<unknown> = observer((props) => {
           ))}
         </ul>
       </div>
-
-      {/*ThemeSetting {URL}*/}
-      {/*{JSON.stringify(store.formItems)}*/}
     </>
   )
 })

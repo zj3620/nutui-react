@@ -19,24 +19,24 @@ config.nav.map((item) => {
 tasks.push(
   fs.copy(
     path.resolve(__dirname, '../src/styles'),
-    path.resolve(__dirname, '../dist/theme/source/styles')
+    path.resolve(__dirname, '../dist/theme-react/source/styles')
   )
 )
 
 Promise.all(tasks).then((res) => {
   fs.copy(
     path.resolve(__dirname, '../src/styles/variables.scss'),
-    path.resolve(__dirname, '../dist/theme/source/styles/variables.scss_source')
+    path.resolve(__dirname, '../dist/theme-react/source/styles/variables.scss_source')
   )
 
   fs.writeFile(
-    path.resolve(__dirname, `../dist/theme/source/styles/sass-styles.scss_source`),
+    path.resolve(__dirname, `../dist/theme-react/source/styles/sass-styles.scss_source`),
     sassStyles,
     'utf8'
   )
 
   fs.outputFile(
-    path.resolve(__dirname, '../dist/theme/source/styles/themes/default.scss'),
+    path.resolve(__dirname, '../dist/theme-react/source/styles/themes/default.scss'),
     fileStr,
     'utf8',
     (error) => {

@@ -23,7 +23,7 @@ switch (import.meta.env.MODE) {
      */
     config.isPrd = false
     config.baseUrl = '/devServer'
-    config.themeUrl = '/react/theme/dist/theme/source'
+    config.themeUrl = '/theme-react/dist/theme-react/source'
     break
   case 'production':
     /*
