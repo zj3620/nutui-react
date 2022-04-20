@@ -164,6 +164,9 @@
       &-logo {
         .logo-link {
           background: url('../../assets/images/logo-header-white.png') no-repeat center/100%;
+          &.react {
+            background: url('../../assets/images/logo-header-white-react.png') no-repeat center/100%;
+          }
         }
         .logo-border {
           background: $theme-red-border;

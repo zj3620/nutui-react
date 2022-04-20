@@ -18,15 +18,15 @@ const Header = () => {
   }, [])
 
   return (
-    <div className="doc-header doc-header-black">
+    <div className="doc-header doc-header-red">
       <div className="header-logo">
-        <a className="logo-link" href="#/" onClick={toHome}></a>
+        <a className="logo-link react" href="#/" onClick={toHome}></a>
         <span className="logo-border"></span>
         <span className="version">{version}</span>
       </div>
       <div className="header-nav">
         <a href="https//github.com/jdf2e/nutui-docs" target="_blank">
-          当前环境：development ,代码 PR 合并后，文档会自动同步至 https//github.com/jdf2e/nutui-docs
+          🌈 视频教程 「一分钟快速实现主题定制」 https://www.bilibili.com/video/BV1fi4y1D7qb
         </a>
       </div>
     </div>
