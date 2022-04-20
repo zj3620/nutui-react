@@ -8,6 +8,7 @@ const { resolve } = path
 // https://vitejs.dev/config/
 export default defineConfig({
   base: '/theme-react',
+  publicDir: './src/sites/',
   server: {
     port: 2022,
     host: '0.0.0.0',

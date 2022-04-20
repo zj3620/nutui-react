@@ -26,7 +26,7 @@ const Header = () => {
       </div>
       <div className="header-nav">
         <a href="https//github.com/jdf2e/nutui-docs" target="_blank">
-          🌈 视频教程 「一分钟快速实现主题定制」 https://www.bilibili.com/video/BV1fi4y1D7qb
+          🌈
         </a>
       </div>
     </div>

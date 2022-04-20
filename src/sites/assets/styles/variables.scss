@@ -8,6 +8,11 @@ $doc-default-primary-bg: linear-gradient(
   rgba(250, 63, 25, 1) 100%
 );
 
+$white: #fff;
+$black: #000;
+// 标题常规文字
+$title-color: #1a1a1a;
+
 // clolr
 // 红色
 $theme-red: #fa2c19;
@@ -18,7 +23,7 @@ $theme-red-actice: #fff;
 $theme-red-select-border: #f0f2f5;
 $theme-red-select-word: #666;
 $theme-red-select-bg: #fff;
-$theme-red-header-bg: url('../../assets/images/header-bg.png');
+$theme-red-header-bg: url('/assets/images/header-bg.png');
 $theme-red-footer-word1: #1a1a1a;
 $theme-red-footer-word2: #666;
 $theme-red-footer-word3: #1d1d21;
@@ -41,6 +46,8 @@ $theme-white-actice: #fa2c19;
 $theme-white-select-border: #f0f2f5;
 $theme-white-select-word: #666;
 $theme-white-select-bg: #fff;
+$theme-white-select-hover: rgba(0, 0, 0, 0.02);
+$theme-white-select-active: rgba(0, 0, 0, 0.06);
 $theme-white-box-border: #f5f5f5;
 $theme-white-footer-word1: #1a1a1a;
 $theme-white-footer-word2: #666;
@@ -60,6 +67,10 @@ $theme-black-input: #ccc;
 $theme-black-border: #d8d8d8;
 $theme-black-actice: #fff;
 $theme-black-select-bg: #1d1d1d;
+$theme-black-nav-select-bg: #2c2c2c;
+$theme-black-nav-select-border: #5e5e5e;
+$theme-black-nav-select-active-bg: rgba(255, 255, 255, 0.2);
+$theme-black-nav-select-hover-bg: rgba(255, 255, 255, 0.06);
 $theme-black-select-border: #c1c1c3;
 $theme-black-select-hover: #797a7b;
 $theme-black-select-word: #fff;
@@ -76,10 +87,14 @@ $theme-black-circle: #1a1a1a;
 // header
 $doc-default-header-color: $white;
 $doc-header-height: 64px;
-$doc-header-bg: url('../../assets/images/header-bg.png') no-repeat;
+$doc-header-bg: url('@/assets/images/header-bg.png') no-repeat;
 // nav
 $doc-default-nav-bg: $white;
 $doc-default-nav-color: $title-color;
+$doc-nav-icon-color1: #41b883;
+$doc-nav-icon-color2: #74c9ff;
+$doc-nav-icon-bg1: rgba(65, 184, 131, 0.16);
+$doc-nav-icon-bg2: rgba(116, 201, 255, 0.16);
 // footer
 // $doc-default-header-color: $white;
 // $doc-footer-height: 73px;
