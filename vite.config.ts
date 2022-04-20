@@ -7,7 +7,23 @@ const path = require('path')
 const { resolve } = path
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/react/',
+  base: '/react/theme',
+  server: {
+    port: 2022,
+    host: '0.0.0.0',
+    proxy: {
+      '/devServer': {
+        target: 'https://nutui.jd.com',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/devServer/, ''),
+      },
+      '/devTheme': {
+        target: 'https://nutui.jd.com/theme/source',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/devTheme/, ''),
+      },
+    },
+  },
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
   },

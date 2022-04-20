@@ -12,7 +12,7 @@ const DemoPreview = () => {
 
   return (
     <div className="doc-demo-preview">
-      <iframe src={`/react/demo.html#${URL}`} frameBorder="0"></iframe>
+      <iframe src={`demo.html#${URL}`} frameBorder="0"></iframe>
     </div>
   )
 }

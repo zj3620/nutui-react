@@ -9,11 +9,21 @@ const Nav = () => {
   return (
     <div className="doc-nav">
       <ol>
+        <li>全局样式</li>
+        <ul>
+          <NavLink key={'navlinkbase'} activeClassName="selected" to={'base'}>
+            <li>
+              <b>基础样式</b>
+            </li>
+          </NavLink>
+        </ul>
+      </ol>
+      <ol>
         {cNav.map((cn: any) => {
           return (
             <>
-              <li>{cn.name}</li>
-              <ul>
+              <li key={`li${cn.name}`}>{cn.name}</li>
+              <ul key={`ul${cn.name}`}>
                 {cn.packages.map((cp: any) => {
                   if (!cp.show) return null
                   return (
