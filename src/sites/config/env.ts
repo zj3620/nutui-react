@@ -2,6 +2,7 @@ type EnvConfig = {
   baseUrl: string
   themeUrl: string
   isPrd: boolean
+  locales: string[]
 }
 
 /**
@@ -15,6 +16,7 @@ const config: EnvConfig = {
   baseUrl: '',
   themeUrl: '',
   isPrd: true, // 是否为线上
+  locales: ['zh-CN', 'zh-TW', 'en-US', 'th'],
 }
 switch (import.meta.env.MODE) {
   case 'development':

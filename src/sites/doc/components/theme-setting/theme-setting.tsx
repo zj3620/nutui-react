@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import { store, useThemeEditor } from '@/sites/doc/components/theme-setting/helpers'
+import {
+  store,
+  useThemeEditor,
+} from '@/sites/doc/components/theme-setting/helpers'
 import './theme-setting.scss'
 import '@/packages/button/button.scss'
 import '@/packages/input/input.scss'
@@ -26,9 +29,13 @@ export const ThemeSetting: React.FC<unknown> = observer((props) => {
   useThemeEditor()
   const history = useHistory()
   const [componentName, setComponentName] = useState('Base')
-
+  console.log('componentName', componentName)
   history.listen((location) => {
-    const name = location.pathname.replace('/', '')
+    // const name = location.pathname.replace('/', '')
+    const path = location.pathname.split('/')
+    console.log(location.pathname, path)
+    const name = path[path.length - 1]
+    console.log(name, store.formItems)
     setComponentName(name || 'Base')
   })
 
@@ -60,8 +67,14 @@ export const ThemeSetting: React.FC<unknown> = observer((props) => {
     <>
       <div className="theme-setting">
         <div>
-          <div className={'outline-btn'}>主题定制：{componentName.replace('/', '')}组件</div>
-          <Button shape={'square'} type={'info'} onClick={downloadScssVariables}>
+          <div className={'outline-btn'}>
+            主题定制：{componentName.replace('/', '')}组件
+          </div>
+          <Button
+            shape={'square'}
+            type={'info'}
+            onClick={downloadScssVariables}
+          >
             下载主题变量
           </Button>
         </div>
@@ -87,6 +100,7 @@ export const ThemeSetting: React.FC<unknown> = observer((props) => {
                     className={'theme-input'}
                     defaultValue={item.value}
                     clearable={false}
+                    labelWidth={0}
                     change={(val) => handleChange(val, item)}
                   ></Input>
                 )}

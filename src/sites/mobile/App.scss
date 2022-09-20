@@ -6,6 +6,8 @@
   flex-direction: column;
 
   #nav {
+    //display: flex;
+    //justify-content: space-between;
     position: fixed;
     z-index: 10;
     left: 0;
@@ -21,6 +23,17 @@
     .back {
       position: absolute;
       left: 0;
+      height: 100%;
+      width: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .translate {
+      position: absolute;
+      top: 0;
+      right: 0;
       height: 100%;
       width: 50px;
       display: flex;

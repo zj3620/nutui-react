@@ -5,8 +5,8 @@ import bem from '@/utils/bem'
 
 type avatarShape = 'round' | 'square'
 export interface SkeletonProps {
-  width: number
-  height: number
+  width: string
+  height: string
   animated: boolean
   row: number
   title: boolean
@@ -17,10 +17,11 @@ export interface SkeletonProps {
   round: boolean
   loading: boolean
   avatarShape: avatarShape
+  children?: React.ReactNode
 }
 const defaultProps = {
-  width: 100,
-  height: 100,
+  width: '100px',
+  height: '100px',
   row: 1,
   animated: false,
   title: false,
@@ -66,9 +67,15 @@ export const Skeleton: FunctionComponent<Partial<SkeletonProps>> = (props) => {
   }
 
   const getStyle = () => {
+    if (avatarSize) {
+      return {
+        width: avatarSize,
+        height: avatarSize,
+      }
+    }
     return {
-      width: avatarSize,
-      height: avatarSize,
+      width: '50px',
+      height: '50px',
     }
   }
 
@@ -78,27 +85,33 @@ export const Skeleton: FunctionComponent<Partial<SkeletonProps>> = (props) => {
         <div>{children}</div>
       ) : (
         <div className={classes} {...restProps}>
-          <div className="skeleton-animation" />
+          {animated && <div className="skeleton-animation" />}
           <div className="nut-skeleton-content">
             {avatar && (
-              <Avatar className={avatarClass} bgColor="rgb(239, 239, 239)" style={getStyle()} />
+              <Avatar
+                className={avatarClass}
+                bgColor="rgb(239, 239, 239)"
+                shape={avatarShape}
+                style={getStyle()}
+              />
             )}
-            {row === 1 ? (
-              <div className={blockClass} style={{ width: `${width}px`, height: `${height}px` }} />
-            ) : (
-              <div className="skeleton-content-line">
-                {title && <div className="skeleton-title" />}
-                {repeatLines(row).map((item, index) => {
-                  return (
-                    <div
-                      className={`${blockClass} skeleton-lines`}
-                      key={index}
-                      style={{ width: `${width}px`, height: `${height}px` }}
-                    />
-                  )
-                })}
-              </div>
+
+            {row === 1 && (
+              <div className={blockClass} style={{ width, height }} />
             )}
+
+            <div className="skeleton-content-line">
+              {title && <div className="skeleton-title" />}
+              {repeatLines(row).map((item, index) => {
+                return (
+                  <div
+                    className={blockClass}
+                    key={index}
+                    style={{ width, height }}
+                  />
+                )
+              })}
+            </div>
           </div>
         </div>
       )}

@@ -4,35 +4,44 @@ import { DataContext } from '@/packages/steps/UserContext'
 import bem from '@/utils/bem'
 import Icon from '@/packages/icon'
 
-export interface StepProps {
+import { IComponent, ComponentDefaults } from '@/utils/typings'
+
+export interface StepProps extends IComponent {
   title: string
   content: string
   activeIndex: number
   icon: string
+  iconColor: string
   size: string
   className: string
   style: React.CSSProperties
   renderContent: () => React.ReactNode
 }
+
 const defaultProps = {
+  ...ComponentDefaults,
   title: '',
   content: '',
   activeIndex: 0,
   icon: '',
+  iconColor: '',
   size: '12px',
 } as StepProps
-export const Step: FunctionComponent<Partial<StepProps> & React.HTMLAttributes<HTMLDivElement>> = (
-  props
-) => {
+export const Step: FunctionComponent<
+  Partial<StepProps> & React.HTMLAttributes<HTMLDivElement>
+> = (props) => {
   const {
     children,
     title,
     content,
     activeIndex,
     icon,
+    iconColor,
     size,
     className,
     renderContent,
+    iconClassPrefix,
+    iconFontClassName,
     ...restProps
   } = {
     ...defaultProps,
@@ -46,6 +55,11 @@ export const Step: FunctionComponent<Partial<StepProps> & React.HTMLAttributes<H
     if (index < +parent.propSteps.current) return 'finish'
     return index === +parent.propSteps.current ? 'process' : 'wait'
   }
+  const handleClickStep = () => {
+    if (parent.propSteps?.clickStep) {
+      parent.propSteps?.clickStep(activeIndex)
+    }
+  }
 
   const b = bem('step')
   const classes = classNames(
@@ -55,24 +69,41 @@ export const Step: FunctionComponent<Partial<StepProps> & React.HTMLAttributes<H
     className,
     b('')
   )
+
+  const renderIconClass = () => {
+    if (!dot && icon) {
+      return 'nut-step-icon is-icon'
+    }
+    if (!dot && !icon) {
+      return 'nut-step-icon is-text'
+    }
+    return 'nut-step-icon'
+  }
   return (
-    <div className={classes} {...restProps}>
+    <div className={classes} {...restProps} onClick={handleClickStep}>
       <div className="nut-step-head">
         <div className="nut-step-line" />
-        <div className={`nut-step-icon ${!dot ? (icon ? 'is-icon' : 'is-text') : ''}`}>
+        <div className={renderIconClass()}>
           {icon ? (
-            <Icon className="nut-step-icon-inner" name={icon} size={size} />
-          ) : dot ? (
-            <span />
+            <Icon
+              classPrefix={iconClassPrefix}
+              fontClassName={iconFontClassName}
+              className="nut-step-icon-inner"
+              color={iconColor}
+              name={icon}
+              size={size}
+            />
           ) : (
-            <span className="nut-step-inner">{activeIndex}</span>
+            !dot && <span className="nut-step-inner">{activeIndex}</span>
           )}
         </div>
       </div>
       <div className="nut-step-main">
         <span className="nut-step-title">{title}</span>
         {content && <span className="nut-step-content">{content}</span>}
-        {renderContent && <span className="nut-step-content">{renderContent()}</span>}
+        {renderContent && (
+          <span className="nut-step-content">{renderContent()}</span>
+        )}
       </div>
     </div>
   )

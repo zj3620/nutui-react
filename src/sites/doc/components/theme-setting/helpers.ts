@@ -40,18 +40,25 @@ class Store {
 
   get formItems() {
     const name = this.pathname
-    const res = toJS(this.variables).filter(({ lowerCaseName }) => lowerCaseName === name)
+    const res = toJS(this.variables).filter(
+      ({ lowerCaseName }) => lowerCaseName === name
+    )
     console.log(res)
-    return toJS(this.variables).filter(({ lowerCaseName }) => lowerCaseName === name)
+    return toJS(this.variables).filter(
+      ({ lowerCaseName }) => lowerCaseName === name
+    )
   }
 
   get cssText() {
-    const variablesText = this.variables.map(({ key, value }) => `${key}:${value}`).join(';')
+    const variablesText = this.variables
+      .map(({ key, value }) => `${key}:${value}`)
+      .join(';')
     cachedStyles = cachedStyles || extractStyle(this.rawStyles)
     return `${variablesText};${cachedStyles}`
   }
 
   updatePathname(pathname: string) {
+    console.log('updatePathname', pathname)
     this.pathname = pathname.replace('/', '').toLowerCase()
   }
 
@@ -112,10 +119,15 @@ class Store {
 }
 
 export const store = new Store()
-const components = configs.nav.map(({ packages }) => packages.map(({ name }) => name)).flat(1)
+const components = configs.nav
+  .map(({ packages }) => packages.map(({ name }) => name))
+  .flat(1)
 
 const awaitIframe = async () => {
-  while (!window.frames[0] || !window.frames[0].document.querySelector('#nav')) {
+  while (
+    !window.frames[0] ||
+    !window.frames[0].document.querySelector('#nav')
+  ) {
     await new Promise((r) => setTimeout(r, 100))
   }
 }
@@ -159,13 +171,16 @@ const extractStyle = (style: string) => {
     .filter((str) => !/^(\s+)?@include/.test(str))
     .join('\n')
 
-  style = style.replace(/(?:({|;|\s|\n))[\w-]+:([^;{}]|;base64)+;(?!base64)/g, (matched) => {
-    const matchedKey = matched.match(/\$[\w-]+\b/g)
-    if (matchedKey && matchedKey.some((k) => store.variablesMap[k])) {
-      return matched
+  style = style.replace(
+    /(?:({|;|\s|\n))[\w-]+:([^;{}]|;base64)+;(?!base64)/g,
+    (matched) => {
+      const matchedKey = matched.match(/\$[\w-]+\b/g)
+      if (matchedKey && matchedKey.some((k) => store.variablesMap[k])) {
+        return matched
+      }
+      return ''
     }
-    return ''
-  })
+  )
 
   return style
 }
@@ -177,16 +192,24 @@ const getInputType = (value: string) => {
   if (/^#[A-Za-z0-9]+$/.test(value)) {
     return 'hex'
   }
-  if (/^(rgb|hsl)a?\((\s*\/?\s*[+-]?\d*(\.\d+)?%?,?\s*){3,5}\)/gim.test(value)) {
+  if (
+    /^(rgb|hsl)a?\((\s*\/?\s*[+-]?\d*(\.\d+)?%?,?\s*){3,5}\)/gim.test(value)
+  ) {
     return 'rgb'
   }
 
   return 'input'
 }
 // 提取变量
-const extractVariables = (matched: string[], name: string, lowerCaseName: string) =>
+const extractVariables = (
+  matched: string[],
+  name: string,
+  lowerCaseName: string
+) =>
   matched.reduce((res, str) => {
-    const extract = str.replace(/\s+!default/, '').match(/(.*):(?:\s+)?([\s\S]*)(?:\s+)?;/)
+    const extract = str
+      .replace(/\s+!default/, '')
+      .match(/(.*):(?:\s+)?([\s\S]*)(?:\s+)?;/)
 
     if (extract) {
       const key = extract[1]
@@ -248,7 +271,9 @@ const getRawFileText = async function (url: string) {
 
 const getSassVariables = async () => {
   // vite 启动模式 bug 待修复
-  const rawVariablesText = await getRawFileText(`${config.themeUrl}/styles/variables.scss_source`)
+  const rawVariablesText = await getRawFileText(
+    `${config.themeUrl}/styles/variables.scss_source`
+  )
   const rawVariables = parseSassVariables(rawVariablesText, components)
 
   // 固定自定义主题的访问链接: https://nutui.jd.com/theme/?theme=自定义变量的文件地址#/
@@ -278,7 +303,9 @@ const getSassVariables = async () => {
 }
 
 export const getRawSassStyle = async (): Promise<void> => {
-  const style = await getRawFileText(`${config.themeUrl}/styles/sass-styles.scss_source`)
+  const style = await getRawFileText(
+    `${config.themeUrl}/styles/sass-styles.scss_source`
+  )
   store.updateRawStyles(style)
 }
 
@@ -290,7 +317,14 @@ export const initSass = async () => {
 export const useThemeEditor = () => {
   const history = useHistory()
   useEffect(() => {
-    store.updatePathname(history.location.pathname === '/' ? '/Base' : history.location.pathname)
+    const pathname = history.location.pathname
+    const pathnameArr = pathname.split('/')
+
+    store.updatePathname(
+      pathname.endsWith('/') === '/'
+        ? '/Base'
+        : pathnameArr[pathnameArr.length - 1]
+    )
   }, [history.location.pathname])
 
   useEffect(() => {

@@ -1,4 +1,9 @@
-import React, { ForwardRefRenderFunction, useEffect, useRef, useImperativeHandle } from 'react'
+import React, {
+  ForwardRefRenderFunction,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+} from 'react'
 import classNames from 'classnames'
 import bem from '@/utils/bem'
 
@@ -20,8 +25,20 @@ const defaultProps = {
   rows: 3,
   top: 10,
 }
-const InternalBarrage: ForwardRefRenderFunction<unknown, Partial<BarrageProps>> = (props, ref) => {
-  const { className, frequency, loop, barrageList, speeds, rows, top, ...restProps } = {
+const InternalBarrage: ForwardRefRenderFunction<
+  unknown,
+  Partial<BarrageProps>
+> = (props, ref) => {
+  const {
+    className,
+    frequency,
+    loop,
+    barrageList,
+    speeds,
+    rows,
+    top,
+    ...restProps
+  } = {
     ...defaultProps,
     ...props,
   }
@@ -49,7 +66,7 @@ const InternalBarrage: ForwardRefRenderFunction<unknown, Partial<BarrageProps>> 
     return () => {
       clearInterval(timer.current)
     }
-  }, [])
+  }, [barrageList])
 
   const run = () => {
     clearInterval(timer.current)
@@ -68,11 +85,10 @@ const InternalBarrage: ForwardRefRenderFunction<unknown, Partial<BarrageProps>> 
 
     const width = el.offsetWidth
     const height = el.offsetHeight
-    console.log(el.offsetWidth, el.offsetHeight)
     el.classList.add('move')
     el.style.animationDuration = `${speeds}ms`
     el.style.top = `${(_index % rows) * (height + top) + 20}px`
-    el.style.width = `${width + 20}px`
+    el.style.width = `${width}px`
     el.style.setProperty('--move-distance', `-${barrageCWidth.current}px`)
     el.dataset.index = `${_index}`
     el.addEventListener('animationend', () => {
@@ -88,7 +104,8 @@ const InternalBarrage: ForwardRefRenderFunction<unknown, Partial<BarrageProps>> 
   )
 }
 
-export const Barrage = React.forwardRef<unknown, Partial<BarrageProps>>(InternalBarrage)
+export const Barrage =
+  React.forwardRef<unknown, Partial<BarrageProps>>(InternalBarrage)
 
 Barrage.defaultProps = defaultProps
 Barrage.displayName = 'NutBarrage'

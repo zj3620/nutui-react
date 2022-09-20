@@ -17,17 +17,41 @@ const ${name}Demo = () => {
 
 export default ${name}Demo
 `,
+
+    tarodemo: `import React from 'react'
+import { useTranslate } from '@/sites/assets/locale/taro'
+import { ${name} } from '@/packages/nutui.react.taro'
+
+const ${name}Demo = () => {
+  return (
+    <>
+      <div className="demo">
+        <h2>基础用法</h2>
+        <${name}></${name}>
+      </div>
+    </>
+  )
+}
+
+export default ${name}Demo
+`,
     index: `import {${name}} from './${name.toLowerCase()}'
+export default ${name}
+`,
+
+    taroindex: `import {${name}} from './${name.toLowerCase()}.taro'
 export default ${name}
 `,
     react: `import React, { FunctionComponent } from 'react'
 import './${name.toLowerCase()}.scss'
+import { useConfig } from '@/packages/configprovider'
 
 export interface ${name}Props {
 
 }
 const defaultProps = {} as ${name}Props
 export const ${name}: FunctionComponent<Partial<${name}Props> & React.HTMLAttributes<HTMLDivElement>> = (props) => {
+  const { locale } = useConfig()
   const { children } = { ...defaultProps, ...props }
   return <div className="nut-${name.toLowerCase()}">${name}</div>
 }

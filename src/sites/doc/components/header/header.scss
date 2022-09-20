@@ -1,9 +1,8 @@
-@import '../../../../sites/assets/styles/variables';
 .doc {
   &-header {
-    position: fixed;
-    z-index: 3;
-    top: 0px;
+    //position: fixed;
+    z-index: 2;
+    top: 0;
     left: 0;
     right: 0;
     min-width: 1300px;
@@ -30,10 +29,6 @@
       position: absolute;
       top: 50%;
       margin-top: -23px;
-
-      &.react {
-        width: 197px;
-      }
     }
     .logo-border {
       width: 1px;
@@ -45,7 +40,7 @@
     }
     .version {
       position: absolute;
-      right: 7px;
+      right: 70px;
       font-size: 14px;
     }
   }
@@ -57,6 +52,9 @@
     width: calc(100% - 240px);
     min-width: 900px;
     padding: 0 40px;
+    > a {
+      color: #fff;
+    }
     .nav-box {
       margin-right: 140px;
       .nav-list {
@@ -91,7 +89,7 @@
             bottom: 3px;
             left: 50%;
             margin-left: -17.5px;
-            background: url('/assets/images/item-active.png');
+            background: url('../../assets/images/item-active.png');
           }
         }
         &:last-of-type {
@@ -104,12 +102,12 @@
         height: 26px;
         vertical-align: middle;
         background-repeat: no-repeat;
-        background-image: url('/assets/images/icon-user.png');
+        background-image: url('../../assets/images/icon-user.png');
         background-size: 26px;
 
         &.gitee {
           margin-left: 8px;
-          background-image: url('/assets/images/icon-gitee.png');
+          background-image: url('../../assets/images/icon-gitee.png');
         }
       }
     }
@@ -165,10 +163,8 @@
     .header {
       &-logo {
         .logo-link {
-          background: url('/assets/images/logo-header-white.png') no-repeat center/100%;
-          &.react {
-            background: url('/assets/images/logo-header-white-react.png') no-repeat center/100%;
-          }
+          background: url('../../assets/images/logo-header-white.png') no-repeat
+            center/100%;
         }
         .logo-border {
           background: $theme-red-border;
@@ -211,122 +207,14 @@
     }
     .header-select {
       &-box {
-        position: relative;
         &.select-down {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-white-down.png');
+            background-image: url('../../assets/images/icon-select-white-down.png');
           }
         }
         &.select-up {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-white-up.png');
-          }
-        }
-        .guild-line {
-          position: absolute;
-          height: 20px;
-          width: 77px;
-          right: 0%;
-          background: transparent;
-        }
-        .guid-data {
-          position: absolute;
-          top: 40px;
-          right: 0%;
-          margin-left: -60px;
-          border-radius: 3px;
-          overflow: hidden;
-          padding-left: 29px;
-          padding-right: 29px;
-          width: 336px;
-          background: $theme-black-nav-select-bg;
-          border: 1px solid $theme-black-nav-select-border;
-          border-radius: 12px;
-          .info {
-            padding-top: 16px;
-            padding-bottom: 22px;
-            &:first-child {
-              border-bottom: 1px solid $theme-black-nav-select-border;
-            }
-            .header {
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-              line-height: 24px;
-              .icon {
-                width: 22px;
-                height: 19px;
-                margin-right: 9px;
-              }
-            }
-            .content {
-              padding-top: 6px;
-              padding-bottom: 6px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              line-height: 24px;
-              margin-top: 2px;
-              margin-bottom: 2px;
-              border-radius: 4px;
-              &.active {
-                background-color: $theme-black-nav-select-active-bg;
-              }
-              &:hover {
-                background-color: $theme-black-nav-select-hover-bg;
-              }
-              .version {
-                width: 91px;
-                text-align: center;
-              }
-              .list {
-                width: 95px;
-                height: 24px;
-                align-items: center;
-                justify-content: flex-start;
-                display: flex;
-                .lang {
-                  height: 24px;
-                  background: $doc-nav-icon-bg1;
-                  border-radius: 4px;
-                  margin-right: 4px;
-                  &:nth-child(2) {
-                    background: $doc-nav-icon-bg2;
-                    .name {
-                      color: $doc-nav-icon-color2;
-                    }
-                  }
-                  .name {
-                    padding-left: 6px;
-                    padding-right: 6px;
-                    font-size: 14px;
-                    font-family: PingFangSC;
-                    font-weight: normal;
-                    color: $doc-nav-icon-color1;
-                  }
-                }
-              }
-              .app {
-                display: flex;
-                justify-content: flex-start;
-                width: 64px;
-                margin-left: 18px;
-                margin-right: 19px;
-              }
-            }
-          }
-          .contentKey {
-            @extend .info;
-            .content {
-              .list {
-                .lang {
-                  background: $doc-nav-icon-bg2;
-                  .name {
-                    color: $doc-nav-icon-color2;
-                  }
-                }
-              }
-            }
+            background-image: url('../../assets/images/icon-select-white-up.png');
           }
         }
       }
@@ -354,10 +242,8 @@
     .header {
       &-logo {
         .logo-link {
-          background: url('/assets/images/logo-header-red.png') no-repeat center/100%;
-          &.react {
-            background: url('/assets/images/logo-header-red-react.png') no-repeat center/100%;
-          }
+          background: url('../../assets/images/logo-header-red.png') no-repeat
+            center/100%;
         }
         .logo-border {
           background: $theme-white-border;
@@ -400,122 +286,14 @@
     }
     .header-select {
       &-box {
-        position: relative;
         &.select-down {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-gray-down.png');
+            background-image: url('../../assets/images/icon-select-gray-down.png');
           }
         }
         &.select-up {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-gray-up.png');
-          }
-        }
-        .guild-line {
-          position: absolute;
-          right: 0%;
-          height: 20px;
-          width: 77px;
-          background: transparent;
-        }
-        .guid-data {
-          position: absolute;
-          top: 40px;
-          right: 0%;
-          margin-left: -60px;
-          border-radius: 3px;
-          overflow: hidden;
-          padding-left: 29px;
-          padding-right: 29px;
-          width: 336px;
-          background: $theme-white;
-          border: 1px solid $theme-white-select-border;
-          border-radius: 12px;
-          .info {
-            padding-top: 16px;
-            padding-bottom: 22px;
-            &:first-child {
-              border-bottom: 1px solid $theme-black-nav-select-border;
-            }
-            .header {
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-              line-height: 24px;
-              .icon {
-                width: 22px;
-                height: 19px;
-                margin-right: 9px;
-              }
-            }
-            .content {
-              padding-top: 6px;
-              padding-bottom: 6px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              line-height: 24px;
-              margin-top: 2px;
-              margin-bottom: 2px;
-              border-radius: 4px;
-              &.active {
-                background-color: $theme-white-select-active;
-              }
-              &:hover {
-                background-color: $theme-white-select-hover;
-              }
-              .version {
-                width: 91px;
-                text-align: center;
-              }
-              .list {
-                width: 95px;
-                height: 24px;
-                align-items: center;
-                justify-content: flex-start;
-                display: flex;
-                .lang {
-                  height: 24px;
-                  background: $doc-nav-icon-bg1;
-                  border-radius: 4px;
-                  margin-right: 4px;
-                  &:nth-child(2) {
-                    background: $doc-nav-icon-bg2;
-                    .name {
-                      color: $doc-nav-icon-color2;
-                    }
-                  }
-                  .name {
-                    padding-left: 6px;
-                    padding-right: 6px;
-                    font-size: 14px;
-                    font-family: PingFangSC;
-                    font-weight: normal;
-                    color: $doc-nav-icon-color1;
-                  }
-                }
-              }
-              .app {
-                display: flex;
-                justify-content: flex-start;
-                width: 64px;
-                margin-left: 18px;
-                margin-right: 19px;
-              }
-            }
-          }
-          .contentKey {
-            @extend .info;
-            .content {
-              .list {
-                .lang {
-                  background: $doc-nav-icon-bg2;
-                  .name {
-                    color: $doc-nav-icon-color2;
-                  }
-                }
-              }
-            }
+            background-image: url('../../assets/images/icon-select-gray-up.png');
           }
         }
       }
@@ -543,10 +321,8 @@
     .header {
       &-logo {
         .logo-link {
-          background: url('/assets/images/logo-header-red.png') no-repeat center/100%;
-          &.react {
-            background: url('/assets/images/logo-header-red-react.png') no-repeat center/100%;
-          }
+          background: url('../../assets/images/logo-header-red.png') no-repeat
+            center/100%;
         }
         .logo-border {
           background: $theme-black-border;
@@ -591,119 +367,12 @@
       &-box {
         &.select-down {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-white-down.png');
+            background-image: url('../../assets/images/icon-select-white-down.png');
           }
         }
         &.select-up {
           .header-select-hd {
-            background-image: url('/assets/images/icon-select-white-up.png');
-          }
-        }
-        .guild-line {
-          position: absolute;
-          height: 20px;
-          right: 0%;
-          width: 77px;
-          background: transparent;
-        }
-        .guid-data {
-          position: absolute;
-          top: 40px;
-          right: 0%;
-          margin-left: -60px;
-          border-radius: 3px;
-          overflow: hidden;
-          padding-left: 29px;
-          padding-right: 29px;
-          width: 336px;
-          background: $theme-black-nav-select-bg;
-          border: 1px solid $theme-black-nav-select-border;
-          border-radius: 12px;
-          .info {
-            padding-top: 16px;
-            padding-bottom: 22px;
-            &:first-child {
-              border-bottom: 1px solid $theme-black-nav-select-border;
-            }
-            .header {
-              display: flex;
-              align-items: center;
-              justify-content: flex-start;
-              line-height: 24px;
-              .icon {
-                width: 22px;
-                height: 19px;
-                margin-right: 9px;
-              }
-            }
-            .content {
-              padding-top: 6px;
-              padding-bottom: 6px;
-              display: flex;
-              align-items: center;
-              justify-content: space-between;
-              line-height: 24px;
-              margin-top: 2px;
-              margin-bottom: 2px;
-              border-radius: 4px;
-              &.active {
-                background-color: $theme-black-nav-select-active-bg;
-              }
-              &:hover {
-                background-color: $theme-black-nav-select-hover-bg;
-              }
-              .version {
-                width: 91px;
-                text-align: center;
-              }
-              .list {
-                width: 95px;
-                height: 24px;
-                align-items: center;
-                justify-content: flex-start;
-                display: flex;
-                .lang {
-                  height: 24px;
-                  background: $doc-nav-icon-bg1;
-                  border-radius: 4px;
-                  margin-right: 4px;
-                  &:nth-child(2) {
-                    background: $doc-nav-icon-bg2;
-                    .name {
-                      color: $doc-nav-icon-color2;
-                    }
-                  }
-                  .name {
-                    padding-left: 6px;
-                    padding-right: 6px;
-                    font-size: 14px;
-                    font-family: PingFangSC;
-                    font-weight: normal;
-                    color: $doc-nav-icon-color1;
-                  }
-                }
-              }
-              .app {
-                display: flex;
-                justify-content: flex-start;
-                width: 64px;
-                margin-left: 18px;
-                margin-right: 19px;
-              }
-            }
-          }
-          .contentKey {
-            @extend .info;
-            .content {
-              .list {
-                .lang {
-                  background: $doc-nav-icon-bg2;
-                  .name {
-                    color: $doc-nav-icon-color2;
-                  }
-                }
-              }
-            }
+            background-image: url('../../assets/images/icon-select-white-up.png');
           }
         }
       }
@@ -725,6 +394,35 @@
       }
     }
   }
+}
+.nut-popover {
+  height: 100%;
+  position: relative;
+}
+.curr-lang {
+  display: block;
+  font-size: 12px;
+}
+.switch {
+  position: absolute;
+  right: 60px;
+  top: 0;
+  height: 100%;
+  width: 150px;
+  cursor: pointer;
+
+  .nut-popover--dark {
+    width: 100%;
+    margin-right: 0;
+    background: transparent;
+    text-align: center;
+  }
+  .title-item {
+    height: 30px;
+  }
+}
+.switch-content {
+  position: relative;
 }
 // 下拉列表选择动画效果
 .fade-enter-active,

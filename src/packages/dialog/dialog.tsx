@@ -1,12 +1,22 @@
-import React, { ForwardRefRenderFunction, HTMLAttributes, forwardRef } from 'react'
+import React, {
+  ForwardRefRenderFunction,
+  HTMLAttributes,
+  forwardRef,
+} from 'react'
 import classNames from 'classnames'
 import Button from '@/packages/button'
 import { DialogWrapper } from './DialogWrapper'
 import confirm from './Confirm'
-import { DialogProps, DialogReturnProps, DialogComponent, ConfirmProps } from './config'
+import {
+  IDialogProps,
+  DialogReturnProps,
+  DialogComponent,
+  ConfirmProps,
+} from './config'
 
+export type DialogProps = IDialogProps
 const defaultProps = {
-  okText: '确定',
+  okText: '确认',
   cancelText: '取消',
   mask: true,
   closeOnClickOverlay: true,
@@ -27,6 +37,7 @@ const BaseDialog: ForwardRefRenderFunction<
   const {
     visible,
     footer,
+    noFooter,
     noOkBtn,
     noCancelBtn,
     lockScroll,
@@ -40,10 +51,11 @@ const BaseDialog: ForwardRefRenderFunction<
     ...restProps
   } = props
 
-  const renderFooter = () => {
-    if (footer === null) return
+  const renderFooter = function () {
+    if (footer === null || noFooter) return ''
 
-    const handleCancel = (e?: any) => {
+    const handleCancel = (e: MouseEvent) => {
+      e.stopPropagation()
       if (!cancelAutoClose) return
 
       onClosed?.()
@@ -53,7 +65,8 @@ const BaseDialog: ForwardRefRenderFunction<
       }
     }
 
-    const handleOk = (e?: any) => {
+    const handleOk = (e: MouseEvent) => {
+      e.stopPropagation()
       onClosed?.()
       onOk?.(e)
       if (lockScroll && visible) {
@@ -69,7 +82,7 @@ const BaseDialog: ForwardRefRenderFunction<
             plain
             type="primary"
             className="nut-dialog__footer-cancel"
-            onClick={() => handleCancel()}
+            onClick={handleCancel}
           >
             {cancelText}
           </Button>
@@ -78,9 +91,11 @@ const BaseDialog: ForwardRefRenderFunction<
           <Button
             size="small"
             type="primary"
-            className={classNames('nut-dialog__footer-ok', { disabled: okBtnDisabled })}
+            className={classNames('nut-dialog__footer-ok', {
+              disabled: okBtnDisabled,
+            })}
             disabled={okBtnDisabled}
-            onClick={() => handleOk()}
+            onClick={handleOk}
           >
             {okText}
           </Button>
@@ -119,5 +134,4 @@ Dialog.confirm = (props: ConfirmProps): DialogReturnProps => {
 })
 
 Dialog.defaultProps = defaultProps
-
 Dialog.displayName = 'NutDialog'

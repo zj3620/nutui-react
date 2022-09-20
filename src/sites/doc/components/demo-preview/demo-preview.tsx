@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './demo-preview.scss'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 
-const DemoPreview = () => {
+const DemoPreview = (props: any) => {
   const history = useHistory()
-  const [URL, setURL] = useState(history.location.pathname)
+  const location = useLocation()
+  const path = location.pathname.split('/')
+  const [URL, setURL] = useState(path[path.length - 1])
 
-  history.listen((location) => {
-    setURL(location.pathname)
-  })
+  useEffect(() => {
+    const path = location.pathname.split('/')
+    setURL(path[path.length - 1])
+  }, [location])
 
   return (
-    <div className="doc-demo-preview">
+    <div className={`doc-demo-preview ${props.className}`}>
       <iframe src={`demo.html#${URL}`} frameBorder="0"></iframe>
     </div>
   )

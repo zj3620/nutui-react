@@ -1,14 +1,22 @@
-import React, { CSSProperties, FunctionComponent, useEffect, useState } from 'react'
+import React, {
+  CSSProperties,
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 import Icon from '@/packages/icon'
 
-export interface ButtonProps {
+import { IComponent, ComponentDefaults } from '@/utils/typings'
+
+export interface ButtonProps extends IComponent {
   className: string
   color: string
   shape: ButtonShape
   plain: boolean
   loading: boolean
   disabled: boolean
-  style: object
+  style: React.CSSProperties
   type: ButtonType
   size: ButtonSize
   block: boolean
@@ -17,10 +25,18 @@ export interface ButtonProps {
   onClick: (e: MouseEvent) => void
 }
 
-export type ButtonType = 'default' | 'primary' | 'info' | 'success' | 'warning' | 'danger'
+export type ButtonType =
+  | 'default'
+  | 'primary'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
 export type ButtonSize = 'large' | 'normal' | 'small'
 export type ButtonShape = 'square' | 'round'
+
 const defaultProps = {
+  ...ComponentDefaults,
   className: '',
   color: '',
   shape: 'round',
@@ -50,14 +66,46 @@ export const Button: FunctionComponent<Partial<ButtonProps>> = (props) => {
     onClick,
     className,
     style,
+    iconClassPrefix,
+    iconFontClassName,
     ...rest
   } = {
     ...defaultProps,
     ...props,
   }
-
-  const [btnName, setBtnName] = useState('')
-  const [btnStyle, setBtnStyle] = useState({})
+  const getStyle = useCallback(() => {
+    const style: CSSProperties = {}
+    if (color) {
+      if (plain) {
+        style.color = color
+        style.background = '#fff'
+        if (!color?.includes('gradient')) {
+          style.borderColor = color
+        }
+      } else {
+        style.color = '#fff'
+        style.background = color
+      }
+    }
+    return style
+  }, [color, plain])
+  const classes = useCallback(() => {
+    const prefixCls = 'nut-button'
+    return [
+      prefixCls,
+      `${type ? `${prefixCls}--${type}` : ''}`,
+      `${size ? `${prefixCls}--${size}` : ''}`,
+      `${shape ? `${prefixCls}--${shape}` : ''}`,
+      `${plain ? `${prefixCls}--plain` : ''}`,
+      `${block ? `${prefixCls}--block` : ''}`,
+      `${disabled ? `${prefixCls}--disabled` : ''}`,
+      `${loading ? `${prefixCls}--loading` : ''}`,
+    ]
+      .filter(Boolean)
+      .join(' ')
+  }, [block, disabled, loading, plain, shape, size, type])
+  const [btnName, setBtnName] = useState(classes())
+  const [btnStyle, setBtnStyle] = useState(getStyle())
   useEffect(() => {
     setBtnName(classes())
     setBtnStyle(getStyle())
@@ -75,38 +123,16 @@ export const Button: FunctionComponent<Partial<ButtonProps>> = (props) => {
     icon,
     children,
     onClick,
+    classes,
+    getStyle,
   ])
-  const classes = () => {
-    const prefixCls = 'nut-button'
-    return `${prefixCls} ${type ? `${prefixCls}--${type}` : ''}
-    ${size ? `${prefixCls}--${size}` : ''}
-    ${shape ? `${prefixCls}--${shape}` : ''}
-    ${plain ? `${prefixCls}--plain` : ''}
-    ${block ? `${prefixCls}--block` : ''}
-    ${disabled ? `${prefixCls}--disabled` : ''}
-    ${loading ? `${prefixCls}--loading` : ''}`
-  }
+
   const handleClick = (e: any) => {
     if (!loading && !disabled && onClick) {
       onClick(e)
     }
   }
-  const getStyle = () => {
-    const style: CSSProperties = {}
-    if (color) {
-      if (plain) {
-        style.color = color
-        style.background = '#fff'
-        if (!color?.includes('gradient')) {
-          style.borderColor = color
-        }
-      } else {
-        style.color = '#fff'
-        style.background = color
-      }
-    }
-    return style
-  }
+
   return (
     <div
       className={`${btnName} ${className}`}
@@ -115,8 +141,22 @@ export const Button: FunctionComponent<Partial<ButtonProps>> = (props) => {
       onClick={(e) => handleClick(e)}
     >
       <div className="nut-button__warp" style={getStyle()}>
-        {loading && <Icon name="loading" />}
-        {!loading && icon ? <Icon name={icon} /> : ''}
+        {loading && (
+          <Icon
+            classPrefix={iconClassPrefix}
+            fontClassName={iconFontClassName}
+            name="loading"
+          />
+        )}
+        {!loading && icon ? (
+          <Icon
+            classPrefix={iconClassPrefix}
+            fontClassName={iconFontClassName}
+            name={icon}
+          />
+        ) : (
+          ''
+        )}
         {children}
       </div>
     </div>

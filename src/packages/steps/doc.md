@@ -10,8 +10,6 @@
 import { Steps } from '@nutui/nutui-react';
 ```
 
-## 代码演示
-
 ### 基本用法
 
 :::demo
@@ -257,6 +255,11 @@ export default App;
 | progressDot            |  点状步骤条     | Boolean | false         |
 
 
+#### nut-steps events
+
+| 事件名 | 说明           | 回调参数     |
+|--------|----------------|--------------|
+| clickStep  | 点击步骤的标题或图标时触发 | index: number |
 
 #### Step
 
@@ -264,7 +267,8 @@ export default App;
 | ---------------- | ---------------------- | ------------ | ----------- |
 | title            | 流程步骤的标题         | String | '' |
 | content          | 流程步骤的描述性文字       | String | '' |
-| icon          | 图标       | String | '' |
-| size          | 图标尺寸大小       | String | '' |
+| icon          | 图标(来自Icon组件的name属性)       | String | '' |
+| iconColor          | 图标颜色       | String | null |
+| size          | 图标尺寸大小(来自Icon组件的size属性)       | String | '' |
 | activeIndex          | 流程步骤的索引       | Number | 0 |
 | renderContent         | 流程步骤的描述性文字的html结构      | React.ReactNode | - |

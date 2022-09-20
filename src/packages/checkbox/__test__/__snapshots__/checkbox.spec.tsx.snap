@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="nut-checkbox nut-checkbox--reverse "
+  >
+    <i
+      class="nutui-iconfont nut-icon nut-icon-checked nut-checkbox__icon"
+      style="font-size: 18px; width: 18px; height: 18px;"
+    />
+    <span
+      class="nut-checkbox__label "
+    >
+      复选框
+    </span>
+  </div>
+</DocumentFragment>
+`;

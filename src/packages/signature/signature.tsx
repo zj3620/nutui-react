@@ -1,7 +1,7 @@
 import React, { FunctionComponent, useRef, useState, useEffect } from 'react'
-
 import Button from '@/packages/button'
 import bem from '@/utils/bem'
+import { useConfig } from '@/packages/configprovider'
 
 export interface SignatureProps {
   type: string
@@ -22,6 +22,7 @@ const defaultProps = {
 export const Signature: FunctionComponent<
   Partial<SignatureProps> & React.HTMLAttributes<HTMLDivElement>
 > = (props) => {
+  const { locale } = useConfig()
   const { type, lineWidth, strokeStyle, unSupportTpl, className, ...rest } = {
     ...defaultProps,
     ...props,
@@ -118,6 +119,8 @@ export const Signature: FunctionComponent<
       case 'jpg':
         dataurl = canvas.toDataURL('image/jpeg', 0.8)
         break
+      default:
+        dataurl = canvas.toDataURL('image/png')
     }
     clear()
     props.confirm && props.confirm(canvas, dataurl as string)
@@ -128,15 +131,21 @@ export const Signature: FunctionComponent<
         {isCanvasSupported() ? (
           <canvas ref={canvasRef} height={canvasHeight} width={canvasWidth} />
         ) : (
-          <p className={`${b('unsopport')}`}>{unSupportTpl}</p>
+          <p className={`${b('unsopport')}`}>
+            {locale.signature.unSupportTpl || unSupportTpl}
+          </p>
         )}
       </div>
 
       <Button className={`${b('btn')}`} type="default" onClick={() => clear()}>
-        重签
+        {locale.signature.reSign}
       </Button>
-      <Button className={`${b('btn')}`} type="primary" onClick={() => confirm()}>
-        确认
+      <Button
+        className={`${b('btn')}`}
+        type="primary"
+        onClick={() => confirm()}
+      >
+        {locale.confirm}
       </Button>
     </div>
   )

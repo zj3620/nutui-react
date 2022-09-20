@@ -1,4 +1,4 @@
-#  Skeleton组件
+#  Skeleton 骨架屏组件
 
 ### 介绍
 
@@ -22,7 +22,7 @@ import { Skeleton } from '@nutui/nutui-react';
 const App = () => {
   return (
     <>
-      <Skeleton width={250} height={15} animated />
+      <Skeleton width="250px" height="15px" animated />
     </>
   )
 }
@@ -40,7 +40,7 @@ import { Skeleton } from '@nutui/nutui-react';
 const App = () => {
   return (
     <>
-      <Skeleton width={250} height={15} row={3} title animated />
+      <Skeleton width="250px" height="15px" row={3} title animated />
     </>
   )
 }
@@ -58,7 +58,7 @@ import { Skeleton } from '@nutui/nutui-react';
 const App = () => {
   return (
     <>
-      <Skeleton width={250} height={15} row={3} title animated avatar />
+      <Skeleton width="250px" height="15px" row={3} title animated avatar avatarSize="100px" />
     </>
   )
 }
@@ -76,7 +76,7 @@ import { Skeleton } from '@nutui/nutui-react';
 const App = () => {
   return (
     <>
-      <Skeleton width={250} height={15} animated round />
+      <Skeleton width="250px" height="15px" animated round />
     </>
   )
 }
@@ -91,28 +91,6 @@ export default App;
 import React, { useState } from 'react'
 import { Skeleton, Switch, Avatar } from '@nutui/nutui-react';
 
-const NutSwitchStyle = {
-  display: 'flex',
-  margin: '0 16px 8px 0'
-}
-
-const RightContentStyle = {
-  marginLeft: '19px',
-  fontFamily: 'PingFangSC',
-  display: 'flex',
-  flexDirection: 'column'
-}
-
-const TitleStyle = {
-  fontSize: '14px',
-  color: 'rgba(51, 51, 51, 1)'
-}
-
-const DescStyle = {
-  marginTop: '10px',
-  fontSize: '13px',
-  color: 'rgba(154, 155, 157, 1)'
-}
 
 const App = () => {
   const [checked, setChecked] = useState(false)
@@ -123,16 +101,16 @@ const App = () => {
   return (
     <>
       <div className="content">
-        <Switch size="15px" change={(value, event) => changeStatus(value, event)} className={NutSwitchStyle} />
-        <Skeleton width={250} height={15} title animated avatar row={3} loading={checked}>
-          <div className="container" style={{ display: 'flex' }}>
+        <Switch size="15px" change={(value, event) => changeStatus(value, event)} />
+        <Skeleton width="250px" height="15px" title animated avatar row={3} loading={checked}>
+          <div className="container">
             <Avatar
               size="50"
               icon="https://img14.360buyimg.com/imagetools/jfs/t1/167902/2/8762/791358/603742d7E9b4275e3/e09d8f9a8bf4c0ef.png"
             />
-            <div className="right-content" className={RightContentStyle}>
-              <span className="title" className={TitleStyle}>NutUI-React</span>
-              <div className="desc" className={DescStyle}>
+            <div className="right-content">
+              <span className="title">NutUI-React</span>
+              <div className="desc">
                 一套京东风格的轻量级移动端React组件库，提供丰富的基础组件和业务组件，帮助开发者快速搭建移动应用。
               </div>
             </div>
@@ -155,13 +133,13 @@ export default App;
 
 | 字段       | 说明                                             | 类型    | 默认值    |
 |------------|-------------------------------------------------|---------|----------|
-| loading    | 是否显示骨架屏                                    | Boolean | `false`    | 
-| width       | 每行宽度                                        | Number  | 100 |
-| height      | 每行高度                                        | Number  | 100   |
+| loading    | 是否显示骨架屏(true不显示骨架屏，false显示骨架屏)                                    | Boolean | `true`    | 
+| width       | 每行宽度(px单位)                                       | String  | `100px` |
+| height      | 每行高度(px单位)                                        | String  | `100px`   |
 | animated    | 是否开启骨架屏动画                                | Boolean  | `false`  |
 | avatar      | 是否显示头像                                     | Boolean | `false`   |
 | avatarShape      | 头像形状：正方形/圆形                        | String | `round`   |
 | avatarSize       | 头像大小                                   | String | `50px`    |
 | round  | 标题/段落是否采用圆角风格                                | Boolean | `false`  |
-| row    | 设置段落行数                                           | Number | 1       |
-| title  | 是否显示段落标题                                        | Boolean | `false`   |
+| row    | 设置段落行数                                           | String | `1`       |
+| title  | 是否显示段落标题                                        | Boolean | `true`   |

@@ -1,41 +1,31 @@
-import React, { FunctionComponent, useEffect, useState, CSSProperties } from 'react'
+import React, {
+  FunctionComponent,
+  useEffect,
+  useState,
+  CSSProperties,
+} from 'react'
 import Icon from '@/packages/icon'
 import Popup from '@/packages/popup'
 import bem from '@/utils/bem'
 import { ExistRender } from './existRender'
 import { CustomRender } from './customRender'
+import { useConfig } from '@/packages/configprovider'
+import {
+  RegionData,
+  NextListObj,
+  SelectedRegionObj,
+  ChangeCallBack,
+  CloseCallBack,
+  AddressList,
+} from './type'
 
-export interface RegionData {
-  name?: string
-  [key: string]: any
-}
+import { IComponent, ComponentDefaults } from '@/utils/typings'
 
-export interface NextListObj {
-  next: string
-  value: string | RegionData
-  custom: string
-  selectedRegion: {}
-}
-export interface AddressList {
-  id?: string | number
-  provinceName: string
-  cityName: string
-  countyName: string
-  townName: string
-  addressDetail: string
-  selectedAddress: boolean
-  name?: string
-  phone?: string
-}
-
-export interface CloseRes {
-  data: {}
-  type: string
-}
-export interface AddressProps {
+export interface AddressProps extends IComponent {
   className?: string
   style?: CSSProperties
   modelValue: boolean
+  modelSelect: (string | number)[]
   type: string
   customAddressTitle: string
   province: RegionData[]
@@ -51,15 +41,22 @@ export interface AddressProps {
   selectedIcon: string
   closeBtnIcon: string
   backBtnIcon: string
-  onSelected?: (prevExistAdd: AddressList, item: AddressList, copyExistAdd: AddressList[]) => void
-  onClose?: (cal: CloseRes) => void
+  onSelected?: (
+    prevExistAdd: AddressList,
+    item: AddressList,
+    copyExistAdd: AddressList[]
+  ) => void
+  onClose?: (cal: CloseCallBack) => void
   closeMask?: (cal: { closeWay: string }) => void
   switchModule?: (cal: { type: string }) => void
-  onChange?: (cal: NextListObj) => void
+  onChange?: (cal: ChangeCallBack) => void
+  onTabChecked?: (cal: string) => void
 }
 
 const defaultProps = {
+  ...ComponentDefaults,
   modelValue: false,
+  modelSelect: [],
   type: 'custom',
   customAddressTitle: '请选择所在地区',
   province: [],
@@ -80,8 +77,10 @@ const defaultProps = {
 export const Address: FunctionComponent<
   Partial<AddressProps> & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>
 > = (props) => {
+  const { locale } = useConfig()
   const {
     modelValue,
+    modelSelect,
     children,
     type,
     height,
@@ -103,16 +102,22 @@ export const Address: FunctionComponent<
     onClose,
     closeMask,
     switchModule,
+    onTabChecked,
     style,
     className,
+    iconClassPrefix,
+    iconFontClassName,
     ...rest
-  } = { ...defaultProps, ...props }
+  } = {
+    ...defaultProps,
+    ...props,
+  }
   const b = bem('address')
 
   const [privateType, setPrivateType] = useState<string>(type)
-  const [tabName, setTabName] = useState<string[]>(['province', 'city', 'country', 'town'])
+  const [tabName] = useState<string[]>(['province', 'city', 'country', 'town'])
   const [showPopup, setShowPopup] = useState(modelValue)
-  const [selectedRegion, setSelectedRegion] = useState({
+  const [selectedRegion, setSelectedRegion] = useState<SelectedRegionObj>({
     province: { name: '' },
     city: { name: '' },
     country: { name: '' },
@@ -121,18 +126,12 @@ export const Address: FunctionComponent<
 
   const [selectedExistAddress, setSelectedExistAddress] = useState({}) // 当前选择的地址
 
-  const [closeWay, setCloseWay] = useState('self')
-
   // 手动关闭 点击叉号(cross)，或者蒙层(mask)
-  const handClose = (type = 'self') => {
-    setCloseWay(() => (type === 'cross' ? 'cross' : 'self'))
-
+  const handClose = () => {
     setShowPopup(false)
   }
   // 点击遮罩层关闭
   const clickOverlay = () => {
-    setCloseWay('mask')
-
     closeMask && closeMask({ closeWay: 'mask' })
   }
   // 切换下一级列表
@@ -142,7 +141,6 @@ export const Address: FunctionComponent<
       next: item.next,
       value: item.value,
       custom: item.custom,
-      selectedRegion: {},
     }
 
     setSelectedRegion({
@@ -157,11 +155,8 @@ export const Address: FunctionComponent<
     item: AddressList,
     copyExistAdd: AddressList[]
   ) => {
-    console.log(prevExistAdd, item, copyExistAdd)
     setSelectedExistAddress(item)
-
     onSelected && onSelected(prevExistAdd, item, copyExistAdd)
-
     handClose()
   }
   // 初始化
@@ -172,8 +167,6 @@ export const Address: FunctionComponent<
         [tabName[i]]: {},
       })
     }
-
-    console.log(selectedRegion)
   }
   // 关闭
   const closeFun = () => {
@@ -182,8 +175,12 @@ export const Address: FunctionComponent<
       addressStr: '',
       ...selectedRegion,
     }
-    const res: CloseRes = {
-      data: {},
+    const res: CloseCallBack = {
+      data: {
+        addressIdStr: '',
+        addressStr: '',
+        ...selectedRegion,
+      },
       type: privateType,
     }
     if (privateType === 'custom' || privateType === 'custom2') {
@@ -202,7 +199,7 @@ export const Address: FunctionComponent<
       ].join('')
       res.data = resCopy
     } else {
-      res.data = selectedExistAddress
+      res.data = selectedExistAddress as AddressList
     }
 
     initAddress()
@@ -224,15 +221,32 @@ export const Address: FunctionComponent<
     return (
       <div className={b('header')}>
         <div className="arrow-back" onClick={onSwitchModule}>
-          {privateType === 'custom' && backBtnIcon && <Icon name={backBtnIcon} color="#cccccc" />}
+          {privateType === 'custom' && backBtnIcon && (
+            <Icon
+              classPrefix={iconClassPrefix}
+              fontClassName={iconFontClassName}
+              name={backBtnIcon}
+              color="#cccccc"
+            />
+          )}
         </div>
 
         <div className={b('header__title')}>
-          {privateType === 'custom' ? customAddressTitle : existAddressTitle}
+          {privateType === 'custom'
+            ? locale.address.selectRegion || customAddressTitle
+            : locale.address.deliveryTo || existAddressTitle}
         </div>
 
-        <div onClick={() => handClose('cross')}>
-          {closeBtnIcon && <Icon name={closeBtnIcon} color="#cccccc" size="18px" />}
+        <div onClick={() => handClose()}>
+          {closeBtnIcon && (
+            <Icon
+              classPrefix={iconClassPrefix}
+              fontClassName={iconFontClassName}
+              name={closeBtnIcon}
+              color="#cccccc"
+              size="18px"
+            />
+          )}
         </div>
       </div>
     )
@@ -255,17 +269,19 @@ export const Address: FunctionComponent<
           visible={showPopup}
           position="bottom"
           onClickOverlay={clickOverlay}
-          onOpen={() => {
-            setCloseWay('self')
-          }}
           onClose={() => {
             closeFun()
           }}
         >
-          <div className={`${b()} ${className || ''}`} style={{ ...style }} {...rest}>
+          <div
+            className={`${b()} ${className || ''}`}
+            style={{ ...style }}
+            {...rest}
+          >
             {headerRender()}
             {(privateType === 'custom' || privateType === 'custom2') && (
               <CustomRender
+                modelValue={modelSelect}
                 type={privateType}
                 province={province}
                 city={city}
@@ -274,6 +290,9 @@ export const Address: FunctionComponent<
                 height={height}
                 onNextArea={(cal) => {
                   nextAreaList && nextAreaList(cal)
+                }}
+                onTabClick={(type) => {
+                  onTabChecked && onTabChecked(type)
                 }}
                 onClose={handClose}
               />
@@ -285,7 +304,9 @@ export const Address: FunctionComponent<
                 selectedIcon={selectedIcon}
                 defaultIcon={defaultIcon}
                 isShowCustomAddress={isShowCustomAddress}
-                customAndExistTitle={customAndExistTitle}
+                customAndExistTitle={
+                  locale.address.chooseAnotherAddress || customAndExistTitle
+                }
                 onSelected={selectedExist}
                 onSwitchModule={onSwitchModule}
               />

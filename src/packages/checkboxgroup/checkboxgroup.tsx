@@ -1,32 +1,34 @@
 import React, { useEffect, useImperativeHandle, useState } from 'react'
 import bem from '@/utils/bem'
 
-export interface CheckBoxGroupProps {
+export interface CheckboxGroupProps {
   disabled: boolean
   checkedValue: string[]
+  max: number | undefined
   onChange: (value: string[]) => void
 }
 
 const defaultProps = {
   disabled: false,
   checkedValue: [],
+  max: undefined,
   onChange: (value: string[]) => {},
-} as CheckBoxGroupProps
+} as CheckboxGroupProps
 export const CheckboxGroup = React.forwardRef(
   (
-    props: Partial<CheckBoxGroupProps> & Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
+    props: Partial<CheckboxGroupProps> &
+      Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'>,
     ref
   ) => {
     const { children } = { ...defaultProps, ...props }
     const b = bem('checkboxgroup')
-    const { className, disabled, onChange, checkedValue, ...rest } = props
+    const { className, disabled, onChange, checkedValue, max, ...rest } = props
 
     const [innerDisabled, setInnerDisabled] = useState(disabled)
     const [innerValue, setInnerValue] = useState(checkedValue)
 
-    useImperativeHandle(ref, () => ({
+    useImperativeHandle<any, any>(ref, () => ({
       toggleAll(state: boolean) {
-        console.log(state)
         if (state === false) {
           setInnerValue([])
         } else {
@@ -38,6 +40,17 @@ export const CheckboxGroup = React.forwardRef(
           setInnerValue(childrenLabel)
         }
       },
+      toggleReverse() {
+        const childrenLabel: string[] = []
+        React.Children.map(children, (child) => {
+          const childProps = (child as any).props
+          childrenLabel.push(childProps.label || (child as any).children)
+        })
+        const reverse: string[] = childrenLabel.filter(
+          (c) => innerValue?.findIndex((v) => v === c) === -1
+        )
+        setInnerValue(reverse)
+      },
     }))
 
     useEffect(() => {
@@ -46,6 +59,7 @@ export const CheckboxGroup = React.forwardRef(
     }, [disabled, checkedValue])
 
     function handleChildChange(state: boolean, label: string) {
+      if (max !== undefined && innerValue && innerValue.length > max) return
       if (innerValue) {
         let clippedValue = []
         if (state) {
@@ -64,8 +78,12 @@ export const CheckboxGroup = React.forwardRef(
       return innerValue?.indexOf(child.props.label || child.children) > -1
     }
 
+    function getParentVals() {
+      return innerValue
+    }
+
     function cloneChildren() {
-      return React.Children.map(children, (child: any, index) => {
+      return React.Children.map(children, (child: any) => {
         const childChecked = validateChildChecked(child)
         if ((child as any).type.displayName !== 'NutCheckBox') {
           return React.cloneElement(child)
@@ -74,6 +92,8 @@ export const CheckboxGroup = React.forwardRef(
           disabled: innerDisabled,
           checked: childChecked,
           onChange: handleChildChange,
+          getParentVals,
+          max,
         })
       })
     }
