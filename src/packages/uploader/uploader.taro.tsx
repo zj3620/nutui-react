@@ -387,6 +387,7 @@ const InternalUploader: ForwardRefRenderFunction<
   }
 
   const readFile = <T extends TFileType>(files: T[]) => {
+    const results: FileItem[] = []
     files.forEach((file: T, index: number) => {
       let fileType = file.type
       const filepath = (file.tempFilePath || file.path) as string
@@ -428,8 +429,9 @@ const InternalUploader: ForwardRefRenderFunction<
         fileItem.url = fileType === 'video' ? file.thumbTempFilePath : filepath
       }
       executeUpload(fileItem, index)
-      setFileList([...fileList, fileItem])
+      results.push(fileItem)
     })
+    setFileList([...fileList, ...results])
   }
 
   const filterFiles = <T extends TFileType>(files: T[]) => {

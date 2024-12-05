@@ -288,6 +288,7 @@ const InternalUploader: ForwardRefRenderFunction<
   }
 
   const readFile = (files: File[]) => {
+    const results: FileItem[] = []
     files.forEach((file: File, index: number) => {
       const formData = new FormData()
       formData.append(name, file)
@@ -306,13 +307,15 @@ const InternalUploader: ForwardRefRenderFunction<
         const reader = new FileReader()
         reader.onload = (event: ProgressEvent<FileReader>) => {
           fileItem.url = (event.target as FileReader).result as string
-          setFileList([...fileList, fileItem])
+          // setFileList([...fileList, fileItem])
+          results.push(fileItem)
         }
         reader.readAsDataURL(file)
       } else {
-        setFileList([...fileList, fileItem])
+        results.push(fileItem)
       }
     })
+    setFileList([...fileList, ...results])
   }
 
   const filterFiles = (files: File[]) => {
