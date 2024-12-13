@@ -521,6 +521,7 @@ export type NutCSSVariables =
   | 'nutuiPopoverDisableColor'
   | 'nutuiPopoverDividerColor'
   | 'nutuiPopoverMenuItemPadding'
+  | 'nutuiPopoverMenuItemWidth'
   | 'nutuiProgressHeight'
   | 'nutuiProgressColor'
   | 'nutuiProgressBackground'

@@ -1,3 +1,13 @@
+# v2.7.3
+
+`2024-12-13`
+
+- :sparkles: feat(Video): web h5 下支持 ref 调用 (#2852)
+- :sparkles: feat(popover): 增加最大宽度设置，支持文本超过最大宽度时，换行展示 (#2851)
+- :bug: fix(empty): actions add support for events (#2854)
+- :bug: fix: 支持 button block (#2853)
+- :bug: fix: dark 模式下arrow 未配置 (#2850)
+
 # v2.7.2
 
 `2024-12-06`
