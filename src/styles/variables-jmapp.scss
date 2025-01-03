@@ -629,6 +629,7 @@ $textarea-limit-color: var(
   --nutui-textarea-limit-color,
   $color-text-help
 ) !default;
+$textarea-limit-align: var(--nutui-textarea-limit-align, right) !default;
 $textarea-text-color: var(--nutui-textarea-text-color, $color-text) !default;
 $textarea-text-curror-color: var(
   --nutui-textarea-text-curror-color,
