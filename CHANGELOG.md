@@ -1,3 +1,15 @@
+# v2.7.5
+
+`2025-01-03`
+
+- 🏡 chore(pre-commit): add check-lock-file script (#2916)
+- :sparkles: feat(performance): getRectByTaro 方法在小程序内增加缓存以提升性能 (#2831)
+- :sparkles: feat(uploader): suppport chooseMedia in web (#2902)
+- :bug: fix(textarea): 字数限制文本遮挡输入框的内容 (#2910)
+- :bug: fix: 调整日历日期 (#2914)
+- :bug: fix: update backtop demos (#2865)
+- :bug: fix: scss variables jmapp
+
 # v2.7.4
 
 `2024-12-20`

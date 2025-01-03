@@ -198,6 +198,7 @@ export type NutCSSVariables =
   | 'nutuiTextareaFont'
   | 'nutuiTextareaPadding'
   | 'nutuiTextareaLimitColor'
+  | 'nutuiTextareaLimitAlign'
   | 'nutuiTextareaTextColor'
   | 'nutuiTextareaTextCurrorColor'
   | 'nutuiTextareaTextLineHeight'
