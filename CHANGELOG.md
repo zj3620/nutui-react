@@ -1,3 +1,13 @@
+# v2.7.6
+
+`2025-01-10`
+
+- :bug: fix(form): item label 未对齐 (#2931)
+- :bug: fix(form): 分割线未生效 (#2927)
+- :bug: fix(tabs): 修复意外地出现了滚动条 (#2912)
+- :bug: fix(swiper): 修复duration不生效 (#2913)
+- :bug: fix: jmapp variables
+
 # v2.7.5
 
 `2025-01-03`
